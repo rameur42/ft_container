@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 20:12:25 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/21 22:02:02 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/22 16:02:46 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,164 @@ namespace ft {
 			vecIterator(pointer p) : _p(p) {};
 			~vecIterator() {};
 			vecIterator(vecIterator const & src) {
-				this->_p = src->_p;
+				this->_p = src._p;
+			}
+			vecIterator	&operator=(vecIterator const & src) {
+				if (this != &src)
+					this->_p = src._p;
+				return *this;
 			}
 			
+
+			//Prefix operator ++_p
+			vecIterator	&operator++()
+			{
+				++(this->_p);
+				return *this;
+			}
+			
+			//Postfix operator _p++
+			vecIterator	operator++(int)
+			{
+				vecIterator tmp(*this);
+				++(*this);
+				return tmp;
+			}
+			
+			//Prefix operator --_p
+			vecIterator	&operator--()
+			{
+				--(this->_p);
+				return *this;
+			}
+			
+			//Postfix operator _p--
+			vecIterator	operator--(int)
+			{
+				vecIterator tmp(*this);
+				--(*this);
+				return tmp;
+			}
+			
+
+			reference	operator*() { return *(this->_p); }
+
+			pointer	operator->() { return this->_p; }
+			
+			pointer get_p() const { return this->_p; }
 		private:
 			pointer	_p;
 	};
+
+	template< class T >
+	bool	operator==(vecIterator<T> const & l, vecIterator<T> const & r)
+	{
+		if (l.get_p() == r.get_p())
+			return true;
+		return false;
+	}
 	
+	template< class T >
+	bool	operator!=(vecIterator<T> const & l, vecIterator<T> const & r)
+	{
+		if (l.get_p() != r.get_p())
+			return true;
+		return false;
+	}
+	
+	template< class T >
+	bool	operator>(vecIterator<T> const & l, vecIterator<T> const & r)
+	{
+		if (l.get_p() > r.get_p())
+			return true;
+		return false;
+	}
+	
+	template< class T >
+	bool	operator<(vecIterator<T> const & l, vecIterator<T> const & r)
+	{
+		if (l.get_p() < r.get_p())
+			return true;
+		return false;
+	}
+	
+	template<class T>
+	bool	operator>=(vecIterator<T> const & l, vecIterator<T> const & r)
+	{
+		if (l.get_p() >= r.get_p())
+			return true;
+		return false;
+	}
+	
+	template< class T >
+	bool	operator<=(vecIterator<T> const & l, vecIterator<T> const & r)
+	{
+		if (l.get_p() <= r.get_p())
+			return true;
+		return false;
+	}
+	
+	/*template< class T >
+	class rVecIterator : public ft::iterator<random_access_iterator_tag, T>{
+		public:
+			typedef typename ft::iterator<random_access_iterator_tag, T>::value_type		value_type;
+			typedef typename ft::iterator<random_access_iterator_tag, T>::difference_type	difference_type;
+			typedef typename ft::iterator<random_access_iterator_tag, T>::pointer			pointer;
+			typedef typename ft::iterator<random_access_iterator_tag, T>::reference			reference;
+			typedef typename ft::iterator<random_access_iterator_tag, T>::iterator_category	iterator_category;
+		
+			rVecIterator() : _p(NULL) {};
+			rVecIterator(pointer p) : _p(p) {};
+			~rVecIterator() {};
+			rVecIterator(rVecIterator const & src) {
+				this->_p = src._p;
+			}
+			rVecIterator	&operator=(rVecIterator const & src) {
+				if (this != &src)
+					this->_p = src._p;
+				return *this;
+			}
+			
+
+			//Prefix operator ++_p
+			rVecIterator	&operator++()
+			{
+				--(this->_p);
+				return *this;
+			}
+			
+			//Postfix operator _p++
+			rVecIterator	operator++(int)
+			{
+				rVecIterator tmp(*this);
+				--(*this);
+				return tmp;
+			}
+			
+			//Prefix operator --_p
+			rVecIterator	&operator--()
+			{
+				++(this->_p);
+				return *this;
+			}
+			
+			//Postfix operator _p--
+			rVecIterator	operator--(int)
+			{
+				rVecIterator tmp(*this);
+				++(*this);
+				return tmp;
+			}
+			
+
+			reference	operator*() { return *(this->_p); }
+
+			pointer	operator->() { return this->_p; }
+			
+			
+		private:
+			pointer	_p;
+	};*/
 }
+
 #endif
