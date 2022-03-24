@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/22 18:03:27 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/24 18:45:10 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ namespace ft {
 			typedef typename ft::vecIterator<const value_type>		const_iterator;
 			//typedef typename ft::rVecIterator<value
 
-			//constructor/copy/destructor
+			//constructor/copy/destructor-------------------------------------------------------------------------------------
 			explicit vector(const allocator_type& alloc = allocator_type())
 			{
 				this->_alloc = alloc;
@@ -89,7 +89,7 @@ namespace ft {
 			
 			~vector() { this->_alloc.deallocate(this->_begin, this->_capacity); }
 			
-			//iterators
+			//iterators------------------------------
 			iterator	begin()
 			{
 				iterator res = this->_begin;
@@ -114,7 +114,7 @@ namespace ft {
 				return res;
 			}
 
-			//Capacity
+			//Capacity--------------------------------------------------------
 			size_type	size() const { return this->_n; }
 
 			size_type	max_size() const { return this->_alloc.max_size(); }
@@ -132,10 +132,7 @@ namespace ft {
 				else if (n > this->_n)
 				{
 					if (n > this->_capacity)
-					{
-						this->_alloc.allocate(n - this->_n);
-						this->_capacity = n;
-					}
+						this->reserve(n);
 					while (this->_n < n)
 					{
 						this->_alloc.construct(this->_begin + this->_n, val);
@@ -154,23 +151,55 @@ namespace ft {
 			}
 			
 			void	reserve(size_type n) {
-				vector res;
-				iterator tmp = this->begin();
-
-				res._begin = res._alloc.allocate(n);
-				res._end = res._begin;
-				for (size_type i = 0; tmp != this->end(); ++tmp)
+				if (n > this->_capacity)
 				{
-					res._alloc.construct(res._begin + i, *tmp);
-					i++;
-					res._end++;
+					if (n > this->max_size())
+						throw std::length_error("Error: reserve can't alloc more than max_size");
+					vector res;
+					iterator tmp = this->begin();
+	
+					res._begin = res._alloc.allocate(n);
+					res._end = res._begin;
+					for (size_type i = 0; tmp != this->end(); ++tmp)
+					{
+						res._alloc.construct(res._begin + i, *tmp);
+						i++;
+						res._end++;
+					}
+					this->_alloc.deallocate(this->_begin, this->_capacity);
+					this->_alloc = res._alloc;
+					this->_capacity = n;
+					this->_begin = res._begin;
+					this->_end = res._end;
+					res._begin = NULL;
 				}
-				this->_alloc.deallocate(this->_begin, this->_capacity);
-				this->_alloc = res._alloc;
-				this->_capacity = n;
-				this->_begin = res._begin;
-				this->_end = res._end;
 			}
+
+			//Element access--------------------------------------------
+			reference		operator[](size_type n) { return (this->_begin[n]); }
+			
+			const_reference	operator[](size_type n) const { return (this->_begin[n]); }
+			
+			reference		at(size_type n) {
+				if (n > this->_n)
+					throw std::out_of_range("Error: out of range");
+				return (this->_begin[n]);
+			}
+			
+			const_reference	at(size_type n) const {
+				if (n > this->_n)
+					throw std::out_of_range("Error: out of range");
+				return (this->_begin[n]);
+			}
+			
+			reference		front() {return *(this->_begin);}
+			
+			const_reference	front() const { return *(this->_begin);}
+			
+			reference		back() { return *(this->_end - 1); }
+			
+			const_reference	back() const { return *(this->_end - 1); }
+
 		private:
 			allocator_type	_alloc;
 			size_type		_n;
@@ -179,4 +208,5 @@ namespace ft {
 			pointer			_end;
 	};
 }
+
 #endif

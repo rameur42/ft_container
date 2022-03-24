@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/22 17:35:52 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/24 18:29:35 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,16 @@ void	ft_print_vector(std::vector<T> & src)
 int	main()
 {
 	//std::vector<int> v(10, 4);
-	ft::vector<int> test(10, 4);
+	ft::vector<int> test(5, 4);
 
 	//ft::vector<int> cp(test);
 	
 	//ft_print_vector(cp);
-	//test.resize(8, 6);
-	test.reserve(25);
-	//test.resize(23, 54);
+	test.resize(8, 6);
+	std::cout << "test-<" << test.back() << std::endl;
+	//test.reserve(25);
+	//test.resize(30, 54);
+	//test.reserve(45);
 	//v.resize(8, 6);
 	//ft_print_vector(v);
 	std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
