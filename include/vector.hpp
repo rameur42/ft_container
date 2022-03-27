@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/24 18:45:10 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/27 23:18:21 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define VECTOR_HPP
 
 #include "iterator.hpp"
+#include "enable_if.hpp"
+#include "is_integral.hpp"
 
 #include <iostream>
 #include <new>
@@ -175,7 +177,7 @@ namespace ft {
 				}
 			}
 
-			//Element access--------------------------------------------
+			//Element access----------------------------------------------------------
 			reference		operator[](size_type n) { return (this->_begin[n]); }
 			
 			const_reference	operator[](size_type n) const { return (this->_begin[n]); }
@@ -199,7 +201,92 @@ namespace ft {
 			reference		back() { return *(this->_end - 1); }
 			
 			const_reference	back() const { return *(this->_end - 1); }
+			
+			//Modifiers--------------------------------------------------------------
+			template <class InputIterator>
+			void	assign(InputIterator first, InputIterator last,
+						typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+			{
+				InputIterator tmp = first;
+				size_type i = 0;
+				while (tmp != last)
+				{
+					tmp++;
+					i++;
+				}
+				this->clear();
+				this->_n = i;
+				if (i != this->_capacity)
+				{
+					this->reserve(i);
+				}
+				this->_end = this->_begin + this->_n;
+				for (size_type j = 0; j < this->_n; j++)
+				{
+					this->_alloc.construct(this->_begin + j, *first);
+					first++;
+				}
+			}
+			
+			void	assign(size_type n, const value_type& val)
+			{
+				this->clear();
+				if (n > this->_capacity)
+				{
+					this->reserve(n);
+				}
+				this->_n = n;
+				this->_end = this->_begin + this->_n;
+				for (size_type i = 0; i < this->_n; i++)
+					this->_alloc.construct(this->_begin + i, val);
+			}
 
+			void	push_back(const value_type & val)
+			{
+				if (this->_capacity == this->_n)
+					this->reserve(this->_capacity + 6);
+				this->_alloc.construct(this->_end, val);
+				this->_end++;
+				this->_n++;
+			}
+			
+			void	pop_back()
+			{
+				if (this->_n > 0)
+				{
+					this->_alloc.destroy(this->_end);
+					this->_end--;
+					this->_n--;
+				}
+			}
+
+			iterator insert(iterator position, const value_type & val)
+			{
+				iterator tmp = this->_end;
+				resize(this->_n + 1);
+				iterator t = this->begin();
+				while(t != this->end())
+				{
+					if (t == position)
+						*t = val;
+					t++;
+				}
+				while (tmp != position && tmp != this->begin())
+				{
+					*tmp = *(--tmp);
+				}
+				return position;
+			}
+			
+			void	clear()
+			{
+				while (this->_n > 0)
+				{
+					this->_alloc.destroy(this->_end);
+					this->_n--;
+					this->_end--;
+				}
+			}
 		private:
 			allocator_type	_alloc;
 			size_type		_n;

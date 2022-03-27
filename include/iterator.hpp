@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 20:12:25 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/22 16:02:46 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/27 23:21:25 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ namespace ft {
 			vecIterator(vecIterator const & src) {
 				this->_p = src._p;
 			}
+
 			vecIterator	&operator=(vecIterator const & src) {
 				if (this != &src)
 					this->_p = src._p;
