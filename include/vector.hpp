@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/27 23:18:21 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/28 18:15:18 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -262,20 +262,168 @@ namespace ft {
 
 			iterator insert(iterator position, const value_type & val)
 			{
-				iterator tmp = this->_end;
-				resize(this->_n + 1);
-				iterator t = this->begin();
-				while(t != this->end())
+				size_type	pos = 0;
+				for (iterator tmp = this->begin();tmp != position; tmp++)
 				{
-					if (t == position)
-						*t = val;
+					pos++;
+					if (tmp == this->end())
+						return position;
+				}
+				iterator pEnd = this->_end;
+				resize(this->_n + 1);
+				iterator nEnd = this->_end;
+				iterator res = this->begin();
+				size_type e = this->_n;
+				while (e > pos)
+				{
+					*nEnd = *pEnd;
+					pEnd--;
+					nEnd--;
+					e--;
+				}
+				for (size_type i = 0; i < pos; i++)
+					res++;
+				*res = val;
+				return res;
+			}
+
+			void	insert(iterator position, size_type n, const value_type & val)
+			{
+				size_type	pos = 0;
+				for (iterator tmp = this->begin(); tmp != position; tmp++)
+				{
+					pos++;
+					if (tmp == this->end())
+						return ;
+				}
+				iterator pEnd = this->_end;
+				resize(this->_n + n);
+				iterator nEnd = this->_end;
+				iterator res = this->begin();
+				size_type e = this->_n;
+				while (e >= (pos + n))
+				{
+					*nEnd = *pEnd;
+					pEnd--;
+					nEnd--;
+					e--;
+				}
+				for (size_type i = 0; i < pos; i++)
+					res++;
+				for (size_type t = 0; t < n; t++)
+				{
+					*res = val;
+					res++;
+				}
+			}
+
+			template < class InputIterator >
+				void	insert (iterator position, InputIterator first, InputIterator last, 
+					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+				{
+					size_type	pos = 0;
+					for (iterator tmp = this->begin(); tmp != position; tmp++)
+					{
+						pos++;
+						if (tmp == this->end())
+							return ;
+					}
+					size_type d = 0;
+					for (InputIterator tmp = first; tmp != last; tmp++)
+						d++;
+					iterator pEnd = this->_end;
+					resize(this->_n + d);
+					iterator nEnd = this->_end;
+					iterator res = this->begin();
+					size_type e = this->_n;
+					while (e >= (pos + d))
+					{
+						*nEnd = *pEnd;
+						pEnd--;
+						nEnd--;
+						e--;
+					}
+					for (size_type i = 0; i < pos; i++)
+						res++;
+					for (size_type t = 0; t < d; t++)
+					{
+						*res = *first;
+						res++;
+						first++;
+					}
+				}
+			
+			iterator erase(iterator position)
+			{
+				iterator t = this->end();
+				while (t != position)
+				{
+					if (t == this->begin())
+						return position;
+					t--;
+				}
+				t = position.get_p() + 1;
+				iterator res = t;
+				while (t != this->end())
+				{
+					*position = *t;
+					position++;
 					t++;
 				}
-				while (tmp != position && tmp != this->begin())
+				this->_alloc.destroy(this->_begin + this->_n);
+				this->_n--;
+				this->_end--;
+				return res;
+			}
+			//lesk a checker sur linux
+
+			iterator erase(iterator first, iterator last)
+			{
+				size_type d = 0;
+				for (iterator tmp = first; tmp != last; tmp++)
+					d++;
+				iterator t = this->end();
+				while (t != first)
 				{
-					*tmp = *(--tmp);
+					if (t == this->begin() && this->begin() != first)
+						return first;
+					t--;
 				}
-				return position;
+				t = first.get_p() + 1;
+				for (size_type i = 0; i <= d; i++)
+				{
+					*first = *last;
+					first++;
+					last++;
+				}
+				for (size_type j = 0; j < d; j++)
+				{
+					this->_alloc.destroy(this->_begin + this->_n);
+					this->_n--;
+					this->_end--;
+				}
+				return t;
+			}
+
+			void	swap(vector & x)
+			{
+				allocator_type	tmpAlloc = x._alloc;
+				size_type		tmpN = x._n;
+				size_type		tmpCapacity = x._capacity;
+				pointer			tmpBegin = x._begin;
+				pointer			tmpEnd = x._end;
+
+				x._alloc = this->_alloc;
+				x._n = this->_n;
+				x._capacity = this->_capacity;
+				x._begin = this->_begin;
+				x._end = this->_end;
+
+				this->_alloc = tmpAlloc;
+				this->_n = tmpN;
+				this->_capacity = tmpCapacity;
+				this->_begin = tmpBegin;
+				this->_end = tmpEnd;
 			}
 			
 			void	clear()
@@ -287,6 +435,9 @@ namespace ft {
 					this->_end--;
 				}
 			}
+
+			//Allocator----------------------------------------------
+			allocator_type get_allocator() const { return this->_alloc; }
 		private:
 			allocator_type	_alloc;
 			size_type		_n;

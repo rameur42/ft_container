@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/27 22:45:59 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/28 18:13:48 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,34 @@ int	main()
 {
 	//std::vector<int> tes(8, 23);
 	//std::vector<int>::iterator l = tes.end();
-	ft::vector<int> test(10, 42);
-	ft::vector<int>::iterator b = test.begin();
-
+	ft::vector<int> test(4, 42);
+	ft::vector<int> tmp(4, 9);
+	
 	//test.assign(b, l);
 	//test.assign(10, 42);
-	b++;
-	test.insert(b, 68);
+	//test.push_back(2);
+	//test.push_back(5);
+	//test.push_back(4);
+	//test.push_back(6);
+	//test.push_back(7);
+	//test.push_back(1);
+	//test.push_back(3);
+	//ft::vector<int>::iterator p = test.begin();
+	//ft::vector<int>::iterator b = test.begin();
+	//ft::vector<int>::iterator e = test.end();
+	//b++;
+	//b++;
+	//b++;
+	//e--;
+	//e--;
+	//e--;
+	//p++;
+	//std::cout << *b << " | " << *e << std::endl;
+	//test.erase(b, e);
+	//b = test.end();
+	//b--;
+	//b--;
+	//test.insert(b, 7, 32);
 	//ft_print_vector(test);
 	//std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
 	//ft::vector<int> cp(test);
@@ -57,8 +78,12 @@ int	main()
 	//ft_print_vector(test);
 
 	//test.pop_back();
+	test.swap(tmp);
 	std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
+	std::cout << "test-> " << std::endl;
 	ft_print_vector(test);
+	std::cout << "tmp-> " << std::endl;
+	ft_print_vector(tmp);
 	/*std::vector<int>	test;
 	test = std::vector<int>(10, 2);
 	for (std::vector<int>::iterator it = test.begin(); it < test.end(); it++)
