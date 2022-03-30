@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/28 18:15:18 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/29 20:39:51 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 #include "iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
+#include "equal.hpp"
+#include "lexicographical_compare.hpp"
 
 #include <iostream>
 #include <new>
@@ -30,16 +32,18 @@ namespace ft {
 	class vector {
 		public:
 		
-			typedef T												value_type;
-			typedef Alloc											allocator_type;
-			typedef unsigned int									size_type;
-			typedef typename allocator_type::reference				reference;
-			typedef typename allocator_type::const_reference		const_reference;
-			typedef typename allocator_type::pointer				pointer;
-			typedef typename allocator_type::const_pointer			const_pointer;
-			typedef typename ft::vecIterator<value_type>			iterator;
-			typedef typename ft::vecIterator<const value_type>		const_iterator;
-			//typedef typename ft::rVecIterator<value
+			typedef T														value_type;
+			typedef Alloc													allocator_type;
+			typedef unsigned int											size_type;
+			typedef typename allocator_type::reference						reference;
+			typedef typename allocator_type::const_reference				const_reference;
+			typedef typename allocator_type::pointer						pointer;
+			typedef typename allocator_type::const_pointer					const_pointer;
+			typedef typename ft::vecIterator<value_type>					iterator;
+			typedef typename ft::vecIterator<const value_type>				const_iterator;
+			typedef typename ft::reverse_iterator<iterator>					reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator>			const_reverse_iterator;
+			typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 			//constructor/copy/destructor-------------------------------------------------------------------------------------
 			explicit vector(const allocator_type& alloc = allocator_type())
@@ -63,6 +67,32 @@ namespace ft {
 					{
 						this->_alloc.construct(this->_end, val);
 						this->_end++;
+					}
+				}
+				catch (std::bad_alloc & e)
+				{
+					std::cout << e.what() << std::endl;
+				}
+			}
+
+			template <class InputIterator>
+				vector (InputIterator first, InputIterator last,
+					const allocator_type& alloc = allocator_type(),
+					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
+			{
+				this->_alloc = alloc;
+				this->_n = 0;
+				for (InputIterator tmp = first; tmp != last; tmp++)
+					this->_n++;
+				this->_capacity = this->_n;
+				this->_begin = this->_alloc.allocate(this->_n);
+				this->_end = this->_begin;
+				try {
+					while (first != last)
+					{
+						this->_alloc.construct(this->_end, *first);
+						this->_end++;
+						first++;
 					}
 				}
 				catch (std::bad_alloc & e)
@@ -100,9 +130,15 @@ namespace ft {
 
 			const_iterator begin() const
 			{
-				const_iterator res = this->begin;
+				const_iterator res = this->_begin;
 				return res;
 			}
+			
+			/*reverse_iterator	rbegin()
+			{
+				reverse_iterator res = this->begin();	
+				return res;
+			}*/
 			
 			iterator	end()
 			{
@@ -445,6 +481,67 @@ namespace ft {
 			pointer			_begin;
 			pointer			_end;
 	};
+
+	template <class T, class Alloc>
+		bool	operator==(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			if (lhs.size() == rhs.size())
+			{
+				typename vector<T>::const_iterator l = lhs.begin();
+				typename vector<T>::const_iterator r = rhs.begin();
+				while(l != lhs.end() && r != rhs.end())
+				{
+					if (*l != *r)
+						return (false);
+					l++;
+					r++;
+				}
+				return true;
+			}
+			return false;
+		}
+	
+	template <class T, class Alloc>
+		bool	operator!=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			return (!(lhs == rhs));
+		}
+
+	template <class T, class Alloc>
+		bool	operator<(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+	
+	template <class T, class Alloc>
+		bool	operator<=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+				return true;
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+		}
+	
+	template <class T, class Alloc>
+		bool	operator>(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			if (ft::equal(lhs.begin(), lhs.end(), rhs.begin()))
+				return false;
+			return (!(ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())));
+		}
+
+	template <class T, class Alloc>
+		bool	operator>=(const vector<T, Alloc>& lhs, const vector<T, Alloc>& rhs)
+		{
+			if (ft::equal(rhs.begin(), rhs.end(), lhs.begin()))
+				return true;
+			return (!(ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())));
+		}
+
+	template <class T, class Alloc>
+		void	swap(vector<T, Alloc>& x, vector<T, Alloc>& y)
+		{
+			x.swap(y);
+		}
 }
 
 #endif

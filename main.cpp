@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/28 18:13:48 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/29 23:03:09 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,44 @@ int	main()
 {
 	//std::vector<int> tes(8, 23);
 	//std::vector<int>::iterator l = tes.end();
-	ft::vector<int> test(4, 42);
-	ft::vector<int> tmp(4, 9);
+	std::vector<int> stest(4, 42);
+	std::vector<int> stmp(4, 43);
+	ft::vector<int> test(1, 23);
+	ft::vector<int> tmp(4, 43);
+	test.push_back(2);
+	test.push_back(5);
+	test.push_back(4);
+	test.push_back(6);
+	test.push_back(7);
+	test.push_back(1);
+	test.push_back(3);
+	ft::vector<int>::iterator b = test.begin();
+	b += 4;
+	ft::vector<int>::reverse_iterator it(b);
+	std::cout << "it->" << *it << std::endl;
+	it = it - 2;
+	std::cout << "base-> " << *(it.base()) << std::endl;
+	std::cout << "it->" << *it << std::endl;
+	ft_print_vector(test);
+	//if (stmp >= stest)
+	//	std::cout << "real ouaaaaaaaaa" << std::endl;
+	//if (tmp >= test)
+	//	std::cout << "my ouaaaaaaaaa" << std::endl;
 	
+	//ft::swap(test, tmp);
 	//test.assign(b, l);
 	//test.assign(10, 42);
-	//test.push_back(2);
-	//test.push_back(5);
-	//test.push_back(4);
-	//test.push_back(6);
-	//test.push_back(7);
-	//test.push_back(1);
-	//test.push_back(3);
 	//ft::vector<int>::iterator p = test.begin();
 	//ft::vector<int>::iterator b = test.begin();
-	//ft::vector<int>::iterator e = test.end();
-	//b++;
-	//b++;
-	//b++;
+	//std::vector<int>::iterator e = test.end();
+	//ft::vector<int> range(b, e);
+	//b -= 1;
 	//e--;
 	//e--;
 	//e--;
 	//p++;
-	//std::cout << *b << " | " << *e << std::endl;
-	//test.erase(b, e);
+	//std::cout << *b << " | " << std::endl;
+	//test.erase(b);
 	//b = test.end();
 	//b--;
 	//b--;
@@ -78,12 +92,12 @@ int	main()
 	//ft_print_vector(test);
 
 	//test.pop_back();
-	test.swap(tmp);
-	std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
-	std::cout << "test-> " << std::endl;
-	ft_print_vector(test);
-	std::cout << "tmp-> " << std::endl;
-	ft_print_vector(tmp);
+	//test.swap(tmp);
+	//std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
+	//std::cout << "test-> " << std::endl;
+	//ft_print_vector(test);
+	//std::cout << "range-> " << std::endl;
+	//ft_print_vector(range);
 	/*std::vector<int>	test;
 	test = std::vector<int>(10, 2);
 	for (std::vector<int>::iterator it = test.begin(); it < test.end(); it++)
