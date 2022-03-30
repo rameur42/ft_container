@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/29 20:39:51 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/30 17:06:51 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,11 +134,29 @@ namespace ft {
 				return res;
 			}
 			
-			/*reverse_iterator	rbegin()
+			reverse_iterator	rbegin()
 			{
-				reverse_iterator res = this->begin();	
+				reverse_iterator res = reverse_iterator(this->end() - 1);	
 				return res;
-			}*/
+			}
+			
+			const_reverse_iterator	rbegin() const
+			{
+				const_reverse_iterator res = const_reverse_iterator(this->end() - 1);
+				return res;
+			}
+			
+			reverse_iterator	rend()
+			{
+				reverse_iterator res = reverse_iterator(this->begin() + 1);
+				return res;
+			}
+
+			const_reverse_iterator	rend() const
+			{
+				const_reverse_iterator res = const_reverse_iterator(this->begin() + 1);
+				return res;
+			}
 			
 			iterator	end()
 			{

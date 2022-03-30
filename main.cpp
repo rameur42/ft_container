@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/29 23:03:09 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/30 16:59:14 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	main()
 	test.push_back(3);
 	ft::vector<int>::iterator b = test.begin();
 	b += 4;
-	ft::vector<int>::reverse_iterator it(b);
-	std::cout << "it->" << *it << std::endl;
-	it = it - 2;
+	ft::vector<int>::reverse_iterator it = test.rbegin();
+	std::cout << "it->" << *it<< std::endl;
+	it += 2;
 	std::cout << "base-> " << *(it.base()) << std::endl;
 	std::cout << "it->" << *it << std::endl;
 	ft_print_vector(test);

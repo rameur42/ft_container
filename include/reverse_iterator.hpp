@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:29:24 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/29 23:03:47 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/30 17:02:28 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ namespace ft {
 			typedef typename iterator_traits<Iterator>::pointer				pointer;
 			typedef typename iterator_traits<Iterator>::reference			reference;
 			
-			reverse_iterator() : _revP(), _base() {};
-			explicit reverse_iterator(iterator_type it) : _revP(it), _base(it - 1) {};
+			reverse_iterator() : _revP() {};
+			explicit reverse_iterator(iterator_type it) : _revP(it) {};
 
-			iterator_type base() const { return this->_base; }
+			iterator_type base() const { return this->_revP; }
 			
 			reference	operator*() const { return (*(this->_revP)); }
 
@@ -42,14 +42,60 @@ namespace ft {
 				return (reverse_iterator(this->_revP - n));
 			}
 
+			reverse_iterator&	operator++()
+			{
+				this->_revP--;
+				return *this;
+			}
+
+			reverse_iterator	operator++(int)
+			{
+				reverse_iterator tmp = *this;
+				this->_revP--;
+				return tmp;
+			}
+			
+			reverse_iterator&	operator+=(difference_type n)
+			{
+				this->_revP -= n;
+				return (*this);
+			}
+			
 			reverse_iterator	operator-(difference_type n) const
 			{
-				//this->_base -= n;
 				return (reverse_iterator(this->_revP + n));
+			}
+
+			reverse_iterator&	operator--()
+			{
+				this->_revP++;
+				return *this;
+			}
+
+			reverse_iterator	operator--(int)
+			{
+				reverse_iterator tmp = *this;
+				this->_revP++;
+				return tmp;
+			}
+
+			reverse_iterator&	operator-=(difference_type n)
+			{
+				this->_revp += n;
+				return (*this);
+			}
+
+			pointer	operator->() const
+			{
+				return &(operator*());
+			}
+			
+			reference	operator[] ( difference_type n) const
+			{
+				return (*(this - n));
 			}
 		private:
 			Iterator	_revP;
-			Iterator	_base;
 	};
 }
 
