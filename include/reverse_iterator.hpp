@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:29:24 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/30 17:02:28 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/30 20:28:18 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,72 @@ namespace ft {
 			{
 				return (*(this - n));
 			}
+			
+			Iterator	getRevP() const
+			{
+				return this->_revP;
+			}
 		private:
 			Iterator	_revP;
 	};
+
+	template <class Iterator>
+	bool operator==(const reverse_iterator<Iterator> & lhs,
+					const reverse_iterator<Iterator> & rhs)
+	{
+		if (lhs.getRevP() == rhs.getRevP())
+			return true;
+		return false;
+	}
+
+	template <class Iterator>
+	bool operator!=(const reverse_iterator<Iterator> & lhs,
+					const reverse_iterator<Iterator> & rhs)
+	{
+		if (lhs.getRevP() != rhs.getRevP())
+			return true;
+		return false;
+	}
+
+	template <class Iterator>
+	bool operator<(const reverse_iterator<Iterator> & lhs,
+					const reverse_iterator<Iterator> & rhs)
+	{
+		if (lhs.getRevP() < rhs.getRevP())
+			return true;
+		return false;
+	}
+
+	template <class Iterator>
+	bool operator<=(const reverse_iterator<Iterator> & lhs,
+					const reverse_iterator<Iterator> & rhs)
+	{
+		if (lhs.getRevP() == rhs.getRevP())
+			return true;
+		else if (lhs.getRevP() < rhs.getRevP())
+			return true;
+		return false;
+	}
+
+	template <class Iterator>
+	bool operator>(const reverse_iterator<Iterator> & lhs,
+					const reverse_iterator<Iterator> & rhs)
+	{
+		if (lhs.getRevP() > rhs.getRevP())
+			return true;
+		return false;
+	}
+
+	template <class Iterator>
+	bool operator>=(const reverse_iterator<Iterator> & lhs,
+					const reverse_iterator<Iterator> & rhs)
+	{
+		if (lhs.getRevP() == rhs.getRevP())
+			return true;
+		else if (lhs.getRevP() > rhs.getRevP())
+			return true;
+		return false;
+	}
 }
 
 #endif

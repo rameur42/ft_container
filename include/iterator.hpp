@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 20:12:25 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/30 17:25:36 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/30 20:48:59 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,14 +109,14 @@ namespace ft {
 				return (this->_p - rhs);
 			}
 			
-			/*friend	vecIterator	operator-(difference_type rhs, const vecIterator & lhs)
+			friend	vecIterator	operator-(difference_type n, const vecIterator & rhs)
 			{
-				return (lhs._p - rhs);
-			}*/
+				return (rhs._p - n);
+			}
 
-			friend	vecIterator operator-(const vecIterator & lhs, const vecIterator & rhs)
+			friend difference_type	operator-(const vecIterator & lhs, const vecIterator & rhs)
 			{
-				return(lhs->_p - rhs->_p);
+				return(lhs._p - rhs._p);
 			}
 
 			vecIterator	&operator+=(difference_type rhs)
