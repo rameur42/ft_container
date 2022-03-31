@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:29:24 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/30 20:28:18 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/31 03:23:50 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,17 @@ namespace ft {
 			
 			reverse_iterator() : _revP() {};
 			explicit reverse_iterator(iterator_type it) : _revP(it) {};
-
+			reverse_iterator(reverse_iterator const & src) : _revP(src._revP) {};
+			reverse_iterator&	operator=(reverse_iterator const & src)
+			{
+				if (this != &src)
+					this->_revP = src._revP;
+				return (*this);
+			}
+			
 			iterator_type base() const { return this->_revP; }
 			
-			reference	operator*() const { return (*(this->_revP)); }
+			reference	operator*() const { return *(this->_revP - 1); }
 
 			reverse_iterator	operator+(difference_type n) const
 			{

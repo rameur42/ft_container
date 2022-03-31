@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/30 20:39:50 by rameur           ###   ########.fr       */
+/*   Updated: 2022/03/31 03:39:30 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,26 @@ namespace ft {
 			
 			~vector() { this->_alloc.deallocate(this->_begin, this->_capacity); }
 			
+			vector&	operator=(const vector& rhs)
+			{
+								pointer tmp;
+
+				if (this != &rhs)
+				{
+					this->_n = rhs._n;
+					this->_capacity = rhs._capacity;
+					this->_begin = this->_alloc.allocate(rhs._n);
+					this->_end = this->_begin;
+					tmp = rhs._begin;
+					for (unsigned int i = 0; i < rhs._n; i++)
+					{
+						this->_alloc.construct(this->_end, *tmp);
+						tmp++;
+						this->_end++;
+					}
+				}
+				return (*this);
+			}
 			//iterators------------------------------
 			iterator	begin()
 			{
@@ -136,26 +156,22 @@ namespace ft {
 			
 			reverse_iterator	rbegin()
 			{
-				reverse_iterator res = reverse_iterator(this->end() - 1);	
-				return res;
+				return (reverse_iterator(this->_end));
 			}
 			
 			const_reverse_iterator	rbegin() const
 			{
-				const_reverse_iterator res = const_reverse_iterator(this->end() - 1);
-				return res;
+				return (const_reverse_iterator(this->_end));
 			}
 			
 			reverse_iterator	rend()
 			{
-				reverse_iterator res = reverse_iterator(this->begin() + 1);
-				return res;
+				return (reverse_iterator(this->_begin));
 			}
 
 			const_reverse_iterator	rend() const
 			{
-				const_reverse_iterator res = const_reverse_iterator(this->begin() + 1);
-				return res;
+				return (const_reverse_iterator(this->_begin));
 			}
 			
 			iterator	end()
