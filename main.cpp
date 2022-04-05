@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/31 03:39:11 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/01 18:44:47 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,30 @@ int	main()
 	ft::vector<std::string> x(10, "Why are you being so stubborn?");
 	ft::vector<std::string> y;
 	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
-    y = ft::vector<std::string>(x.begin(), x.end());
     std::cout << "hello there" << std::endl;
-	y.push_back("salut");
+	//y.push_back("salut");
 	
+    y.assign(x.begin(), x.end() - (std::rand() % x.size()));
+
 	std::vector<std::string> i(10, "Why are you being so stubborn?");
-	std::vector<std::string> j;
+	std::vector<std::string> j = std::vector<std::string>(i.begin(), i.end());
 	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
-    j = std::vector<std::string>(i.begin(), i.end());
 	int ft = 0;
 	j.push_back("salut");
-	for (ft::vector<std::string>::iterator it = y.begin(); it != y.end(); it++)
+	for (ft::vector<std::string>::const_iterator it = y.begin(); it != y.end(); it++)
 	{
 		std::cout << "ft=" << *it << std::endl;
 		ft++;
 	}
 	std::cout << "reverse->" << std::endl;
-	for (ft::vector<std::string>::reverse_iterator it = y.rbegin(); it != y.rend(); it++)
+	for (ft::vector<std::string>::const_reverse_iterator it = y.rbegin(); it != y.rend(); it++)
 	{
 		std::cout << "r ft=" << *it << std::endl;
 		ft++;
 	}
 	int std = 0;
 	std::cout << "|||||||||||||||||||||||||||||||||||" << std::endl;
-	for (std::vector<std::string>::iterator it = j.begin(); it != j.end(); it++)
+	for (std::vector<std::string>::const_iterator it = j.begin(); it != j.end(); it++)
 	{
 		std::cout << "std=" << *it << std::endl;
 		std++;

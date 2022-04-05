@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/31 03:39:30 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/01 18:46:44 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,22 +154,22 @@ namespace ft {
 				return res;
 			}
 			
-			reverse_iterator	rbegin()
+			reverse_iterator	rbegin(void)
 			{
 				return (reverse_iterator(this->_end));
 			}
 			
-			const_reverse_iterator	rbegin() const
+			const_reverse_iterator	rbegin(void) const
 			{
 				return (const_reverse_iterator(this->_end));
 			}
 			
-			reverse_iterator	rend()
+			reverse_iterator	rend(void)
 			{
 				return (reverse_iterator(this->_begin));
 			}
 
-			const_reverse_iterator	rend() const
+			const_reverse_iterator	rend(void) const
 			{
 				return (const_reverse_iterator(this->_begin));
 			}
@@ -498,12 +498,14 @@ namespace ft {
 			
 			void	clear()
 			{
-				while (this->_n > 0)
+				size_type len = this->size();
+
+				for (size_type i = 0; i < len; i++)
 				{
-					this->_alloc.destroy(this->_end);
-					this->_n--;
 					this->_end--;
+					this->_alloc.destroy(this->_end);
 				}
+				this->_n = 0;
 			}
 
 			//Allocator----------------------------------------------

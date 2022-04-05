@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/21 20:12:25 by rameur            #+#    #+#             */
-/*   Updated: 2022/03/30 20:48:59 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/01 18:08:28 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 #include "reverse_iterator.hpp"
 
 namespace ft {
-	struct input_iterator_tag {};
+	/*struct input_iterator_tag {};
 	struct output_iterator_tag {};
 	struct forward_iterator_tag {};
 	struct bidirectional_iterator_tag {};
-	struct random_access_iterator_tag {};
+	struct random_access_iterator_tag {};*/
 
 
 /*	template <class Category, class T, class Distance = ptrdiff_t,
@@ -37,7 +37,7 @@ namespace ft {
 	
 	
 	template< class T >
-	class vecIterator : public ft::iterator<random_access_iterator_tag, T>{
+	class vecIterator : public ft::iterator<random_access_iterator_tag, T> {
 		public:
 			typedef typename ft::iterator<random_access_iterator_tag, T>::value_type		value_type;
 			typedef typename ft::iterator<random_access_iterator_tag, T>::difference_type	difference_type;
@@ -52,12 +52,23 @@ namespace ft {
 				this->_p = src._p;
 			}
 
+			operator	vecIterator<const value_type>() const
+			{
+				return (vecIterator<const value_type>(this->_p));
+			}
+			
 			vecIterator	&operator=(vecIterator const & src) {
 				if (this != &src)
 					this->_p = src._p;
 				return *this;
 			}
 			
+			friend bool	operator!=(vecIterator const & lhs, vecIterator const & rhs)
+			{
+				if (lhs.get_p() != rhs.get_p())
+					return true;
+				return false;
+			}
 
 			//Prefix operator ++_p
 			vecIterator	&operator++()
