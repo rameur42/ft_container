@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/06 06:58:55 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/06 09:08:55 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -336,7 +336,7 @@ namespace ft {
 
 			void _dealloc()
 			{
-			    if (_capacity)
+				if (_capacity)
 			    {
 			        for (size_type i = 0; i < _n; i++)
 			            _alloc.destroy(_begin + i);
@@ -393,7 +393,7 @@ namespace ft {
 				return false;
 			}
 			
-			void	reserve(size_type n) {
+			/*void	reserve(size_type n) {
 				if (n > this->_capacity)
 				{
 					if (n > this->max_size())
@@ -415,8 +415,29 @@ namespace ft {
 					this->_end = res._end;
 					res._begin = NULL;
 				}
-			}
+			}*/
 
+			void	reserve(size_type n) {
+				
+				if (this->_capacity > n)
+					return ;
+				if (n > max_size())
+					throw std::out_of_range("vector::reserve out of range");
+				else
+					this->_realloc(n);
+			}
+			
+			void	_realloc(size_type n) {
+
+				size_type	prevSize = this->_n;
+				iterator	tmp = _alloc.allocate(n);
+				std::uninitialized_copy(_begin, _begin + _n, tmp);
+				_dealloc();
+				_n = prevSize;
+				_begin = tmp;
+				_capacity = n;
+				_end = _begin + _n;
+			}
 			//Element access----------------------------------------------------------
 			reference		operator[](size_type n) { return (this->_begin[n]); }
 			
@@ -447,38 +468,30 @@ namespace ft {
 			void	assign(InputIterator first, InputIterator last,
 						typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
 			{
-				InputIterator tmp = first;
-				size_type i = 0;
-				while (tmp != last)
+				size_type i = std::distance(first, last);
+				this->_dealloc();
+				if (i)
 				{
-					tmp++;
-					i++;
+					if (i > max_size())
+						throw std::out_of_range("vector::reserve out of range");
+					_begin = _alloc.allocate(i);
+					_capacity = i;
 				}
-				this->clear();
+				for (iterator tmp = begin(); tmp < begin() + i ; tmp++)
+					this->_alloc.construct(tmp, *first++);
 				this->_n = i;
-				if (i != this->_capacity)
-				{
-					this->reserve(i);
-				}
 				this->_end = this->_begin + this->_n;
-				for (size_type j = 0; j < this->_n; j++)
-				{
-					this->_alloc.construct(this->_begin + j, *first);
-					first++;
-				}
 			}
 			
 			void	assign(size_type n, const value_type& val)
 			{
-				this->clear();
-				if (n > this->_capacity)
-				{
+				this->_dealloc();
+				if (n)
 					this->reserve(n);
-				}
+				for (iterator tmp = begin(); tmp < begin() + n; tmp++)
+					this->_alloc.construct(tmp, val);
 				this->_n = n;
 				this->_end = this->_begin + this->_n;
-				for (size_type i = 0; i < this->_n; i++)
-					this->_alloc.construct(this->_begin + i, val);
 			}
 
 			void	push_back(const value_type & val)

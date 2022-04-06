@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/06 07:13:19 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/06 08:51:16 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,35 +41,26 @@ int	main()
 {
 	//std::vector<int> tes(8, 23);
 	//std::vector<int>::iterator l = tes.end();
-	std::vector<int> stest(4, 42);
-	std::vector<int> stmp(4, 43);
 
-	ft::vector<std::string> x(10, "Why are you being so stubborn?");
+	//ft::vector<std::string> x(10, "Why are you being so stubborn?");
 	ft::vector<std::string> y;
-	ft::vector<std::string> z;
+	//ft::vector<std::string> z;
 	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
-    std::cout << "hello there" << std::endl;
 	
-    y.assign(x.begin(), x.end() - (std::rand() % x.size()));
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.erase(y.begin(), y.begin() + 12);
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.clear();
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.resize(32, "jsp");
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
-	y.insert(y.begin(), 46, "salut");
+    //y.assign(x.begin(), x.end() - (std::rand() % x.size()));
+	std::cout << y.capacity() << std::endl;
+	y.push_back("SALUT");
+	y.assign(10, "Why are you beingbeing so stubborn?");
+	y.assign(10, "Why are you beingbeing so stubborn?");
+	y.assign(10, "Why are you beingbeing so stubborn?");
+	y.assign(10, "Why are you beingbeing so stubborn?");
+	y.assign(10, "Why are you beingbeing so stubborn?");
+	y.assign(10, "Why are you beingbeing so stubborn?");
+	//y.insert(y.begin(), 46, "salut");
 	//y = x;
-//	y.push_back("salut");
+//	y.push_back("salut");/
 
-	std::vector<std::string> i(10, "Why are you being so stubborn?");
+	/*std::vector<std::string> i(10, "Why are you being so stubborn?");
 	std::vector<std::string> j = std::vector<std::string>(i.begin(), i.end());
 	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
 	int ft = 0;
@@ -98,7 +89,7 @@ int	main()
 		std::cout << "r std=" << *it << std::endl;
 		std++;
 	}
-	std::cout << "ft-> " << ft << " std-> " << std << std::endl;
+	std::cout << "ft-> " << ft << " std-> " << std << std::endl;*/
  	//ft::vector<int> test;
 	//ft::vector<int> tmp;
 	//test.push_back(2);
