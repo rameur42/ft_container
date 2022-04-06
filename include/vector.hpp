@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/06 09:08:55 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/06 09:15:41 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -645,7 +645,7 @@ namespace ft {
 
 			//Allocator----------------------------------------------
 			allocator_type get_allocator() const { return this->_alloc; }
-		private:
+		protected:
 			allocator_type	_alloc;
 			size_type		_n;
 			size_type		_capacity;
