@@ -6,13 +6,15 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/06 08:51:16 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/08 10:31:48 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector.hpp"
+#include "stack.hpp"
+#include "map.hpp"
 #include <vector>
-
+#include <map>
 #include <iostream>
 #include <iomanip>
 #include <string>
@@ -44,6 +46,20 @@ int	main()
 
 	//ft::vector<std::string> x(10, "Why are you being so stubborn?");
 	ft::vector<std::string> y;
+	ft::map<int, std::string> test;
+	std::map<int, std::string> test1;
+	
+	ft::pair<int, std::string> p1 = ft::make_pair<int, std::string>(2, "salut");
+	ft::pair<int, std::string> p2 = ft::make_pair<int, std::string>(1, "ca");
+	ft::pair<int, std::string> p3 = ft::make_pair<int, std::string>(5, "marche");
+	ft::pair<int, std::string> p4 = ft::make_pair<int, std::string>(4, "?");
+
+	test.insert(p1);
+	test.insert(p2);
+	test.insert(p3);
+	test.insert(p4);
+	//std::cout << test1[3] << " | " << test1.size() << std::endl;
+ 	test.print();
 	//ft::vector<std::string> z;
 	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
 	

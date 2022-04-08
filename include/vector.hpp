@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/06 09:15:41 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/08 04:52:34 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,6 @@ namespace ft {
 				_begin = NULL;
 				if (n > _alloc.max_size())
 					throw std::out_of_range("error");
-				//_check_range(n);
 				if (n)
 				{
 					_begin = _alloc.allocate(n);
