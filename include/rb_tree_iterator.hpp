@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 06:17:50 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/08 08:25:26 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/09 03:30:54 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ namespace ft
 			
 			bool	operator!=(rb_tree_iterator const & val) const
 			{
-				return _node != val.node;
+				return _node != val._node;
 			}
 		protected:
 			void	increment()
@@ -113,7 +113,7 @@ namespace ft
 				}
 				else
 				{
-					node_pointer tmp = _node->parent;
+					node_pointer tmp = _node->_parent;
 					while (tmp != _node->_nil_node && _node == tmp->_right)
 					{
 						_node = tmp;

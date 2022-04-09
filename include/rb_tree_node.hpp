@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 03:29:02 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/08 10:12:24 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/09 04:50:45 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,21 @@
 
 namespace ft {
 	template < typename T >
-	class rb_tree_node
+	struct rb_tree_node
 	{
-		public:
 			typedef	rb_tree_node	node;
 			typedef rb_tree_node*	node_pointer;
 			typedef T*				data_pointer;
 
 			bool			_isRed;
-			node_pointer	_nil_node;
+			node_pointer	_nil_node;//??
 			node_pointer	_parent;
 			node_pointer	_left;
 			node_pointer	_right;
 			data_pointer	_data;
 
-			//??
-			node_pointer	_min;
-			node_pointer	_max;
+			node_pointer	_min;//??
+			node_pointer	_max;//??
 		
 			//default constructor
 			rb_tree_node() : _isRed(false), _nil_node(), _parent(), _left(), _right(), _data(), _min(), _max() {}
@@ -51,6 +49,7 @@ namespace ft {
 				_max = src._max;
 				return *this;
 			}
+			~rb_tree_node() {}
 	};
 
 	template<typename T>
