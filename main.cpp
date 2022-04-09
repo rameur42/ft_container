@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 05:58:09 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/09 09:35:51 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,44 @@ void	ft_print_vector(std::vector<T> & src)
 
 int	main()
 {
+	ft::map<int, std::string> m;
+
+    ft::pair<int, std::string> p1 = ft::make_pair<int, std::string>(12, "s");
+    ft::pair<int, std::string> p2 = ft::make_pair<int, std::string>(10, "s");
+    ft::pair<int, std::string> p3 = ft::make_pair<int, std::string>(11, "s");
+    ft::pair<int, std::string> p4 = ft::make_pair<int, std::string>(4, "s");
+    ft::pair<int, std::string> p5 = ft::make_pair<int, std::string>(-4, "s");
+    ft::pair<int, std::string> p6 = ft::make_pair<int, std::string>(6, "s");
+    ft::pair<int, std::string> p7 = ft::make_pair<int, std::string>(8, "s");
+    ft::pair<int, std::string> p8 = ft::make_pair<int, std::string>(11, "s");
+    ft::pair<int, std::string> p9 = ft::make_pair<int, std::string>(21, "s");
+    ft::pair<int, std::string> p10 = ft::make_pair<int, std::string>(13, "s");
+    ft::pair<int, std::string> p11 = ft::make_pair<int, std::string>(18, "s");
+    ft::pair<int, std::string> p12 = ft::make_pair<int, std::string>(22, "s");
+    ft::pair<int, std::string> p13 = ft::make_pair<int, std::string>(36, "s");
+    m.insert(p1);
+    m.insert(p2);
+    m.insert(p3);
+    m.insert(p4);
+    m.insert(p5);
+    m.insert(p6);
+    m.insert(p7);
+    m.insert(p8);
+    m.insert(p9);
+    m.insert(p10);
+    m.insert(p11);
+    m.insert(p12);
+    m.insert(p13);
+    for (ft::map<int, std::string>::iterator it = m.begin(); it != m.end(); it++)
+        std::cout << it->first << std::endl;
+
+		m.print();
+		return 0;
 	//std::vector<int> tes(8, 23);
 	//std::vector<int>::iterator l = tes.end();
 
 	//ft::vector<std::string> x(10, "Why are you being so stubborn?");
-	std::vector<std::string> y;
+	/*std::vector<std::string> y;
 	ft::map<int, std::string> test;
 	
 	ft::pair<int, std::string> p1 = ft::make_pair<int, std::string>(2, "salut");
@@ -72,28 +105,26 @@ int	main()
 	test.insert(p11);
 	test.insert(p12);
 	
- 	test.print();
+ 	test.print();*/
 	
-	test.erase(2);
-	
-	ft::map<int, std::string>::iterator b = test.begin();
+	//test.erase(2);
+	//std::cout << "val-> " << test[9] << std::endl;
+	/*ft::map<int, std::string>::iterator b = test.begin();
 	ft::map<int, std::string>::iterator e = test.end();
-	ft::map<int, std::string> test1(b, e);
+	while (e != b)
+	{
+		std::cout << e->second << std::endl;
+		e--;
+	}*/
+	//ft::map<int, std::string> test1(b, e);
 	//std::cout << test1[3] << " | " << test1.size() << std::endl;
- 	test1.print();
+ 	//test1.print();
 	//test1.print();
 	//ft::vector<std::string> z;
 	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
 	
     //y.assign(x.begin(), x.end() - (std::rand() % x.size()));
 	//std::cout << y.capacity() << std::endl;
-	y.push_back("SALUT");
-	y.assign(10, "Why are you beingbeing so stubborn?");
-	y.assign(10, "Why are you beingbeing so stubborn?");
-	y.assign(10, "Why are you beingbeing so stubborn?");
-	y.assign(10, "Why are you beingbeing so stubborn?");
-	y.assign(10, "Why are you beingbeing so stubborn?");
-	y.assign(10, "Why are you beingbeing so stubborn?");
 	//y.insert(y.begin(), 46, "salut");
 	//y = x;
 //	y.push_back("salut");/
@@ -198,5 +229,6 @@ int	main()
 	for (std::vector<int>::iterator it = test.begin(); it < test.end(); it++)
 		std::cout << *it << std::endl;
 	std::cout << test.size() << "|" << test.capacity() << "|" << test.max_size() << "|" << std::endl;*/
-	return 0;
+	
+	//return 0;
 }

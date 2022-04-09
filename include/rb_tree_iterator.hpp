@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 06:17:50 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 03:30:54 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/09 09:21:05 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,22 +126,22 @@ namespace ft
 			{
 				if (_node == _node->_nil_node)
 				{
-					//_node = _node->_nil_node->_max;
+					_node = _node->_nil_node->_max;
 					return ;
 				}
 				if (_node->_left != _node->_nil_node)
 				{
 					_node = _node->_left;
-					while (_node->right != _node->_nile_node)
+					while (_node->_right != _node->_nil_node)
 						_node = _node->_right;
 				}
 				else
 				{
 					node_pointer tmp = _node->_parent;
-					while(tmp != _node->_nile_node && _node == tmp->_left)
+					while(tmp != _node->_nil_node && _node == tmp->_left)
 					{
 						_node = tmp;
-						tmp = tmp->parent;
+						tmp = tmp->_parent;
 					}
 					_node = tmp;
 				}

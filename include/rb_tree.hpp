@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 05:48:01 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 06:04:02 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/09 09:36:03 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ namespace ft
 					if (this->_root != _nil)
 						_clean();
 					_node_alloc.deallocate(_nil, 1);
+					_data_alloc.deallocate(_nil->_data, 1);
 				}
 				//assignement
 				rb_tree&	operator=(const rb_tree & src)
@@ -194,6 +195,8 @@ namespace ft
 						y->_right = new_node;
 					new_node->_isRed = true;
 					//insert_node_fixe(new_node);
+					_nil->_min = _rb_tree_min_node(_root);
+					_nil->_max = _rb_tree_max_node(_root);
 					_size++;
 					return pair_type(iterator(new_node), true);
 				}
@@ -202,7 +205,13 @@ namespace ft
 				{
 					return insert_node(val, _root);
 				}
-
+				iterator	insert_pose(const_iterator pos, value_type & val)
+				{
+					iterator res;
+					(void)pos;
+					res = insert_node(val, _root).first;
+					return res;
+				}
 				void		delete_node(node_pointer node)
 				{
 					node_pointer x;
@@ -244,7 +253,6 @@ namespace ft
 					_size--;
 				}
 				
-				size_type	get_size() const { return _size; }
 				
 				void	print()
 				{
@@ -257,14 +265,30 @@ namespace ft
 				//Iterators
 				iterator				rb_begin() { return iterator(_rb_tree_min_node(_root)); }
 				const_iterator			rb_begin() const { return const_iterator(_rb_tree_min_node(_root)); }
-				iterator				rb_end() { return iterator(_rb_tree_max_node(_root)); }
-				const_iterator			rb_end() const { return const_iterator(_rb_tree_min_node(_root)); }
+				iterator				rb_end() { return iterator(_rb_tree_max_node(_nil)); }
+				const_iterator			rb_end() const { return const_iterator(_rb_tree_max_node(_nil)); }
 				reverse_iterator		rb_rbegin() { return reverse_iterator(rb_end()); }
 				const_reverse_iterator	rb_rbegin() const { return const_reverse_iterator(rb_end()); }
-				reverse_iterator		rb_end() { return reverse_iterator(rb_begin()); }
-				const_reverse_iterator	rb_end() const { return const_reverse_iterator(rb_begin()); }
+				reverse_iterator		rb_rend() { return reverse_iterator(rb_begin()); }
+				const_reverse_iterator	rb_rend() const { return const_reverse_iterator(rb_begin()); }
+				//Capacity
+				bool					empty() const
+				{
+					if (_size == 0)
+						return true;
+					return false;
+				}
+				size_type	get_size() const { return _size; }
+				size_type	get_max_size() const { return (_node_alloc.max_size() / sizeof(value_type)); }
 				
+				void		rb_swap(rb_tree & x)
+				{
+					std::swap(_root, x._root);
+					std::swap(_nil, x._nil);
+					std::swap(_size, x._size);
+				}
 				data_allocator	get_data_allocator() const { return _data_alloc; }
+				Comp			get_key_compare() const { return _key_compare; }
 		};
 
 		template<typename T, typename Comp, typename Alloc>
@@ -280,7 +304,7 @@ namespace ft
 				_size = 0;
 				_nil = _node_alloc.allocate(1);
 				_nil->_isRed = false;
-				_nil->_data = NULL;
+				_nil->_data = _data_alloc.allocate(1);
 				_nil->_nil_node = _nil;
 				_nil->_parent = _nil;
 				_nil->_left = _nil;
