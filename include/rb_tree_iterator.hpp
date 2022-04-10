@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 06:17:50 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/10 09:12:49 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 11:00:37 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ namespace ft
 				return _node->_data;
 			}
 
+			const_reference operator*() const
+			{
+				return *_node->_data;
+			}
+
+			const_pointer	operator->() const
+			{
+				return _node->_data;
+			}
 			//pre
 			rb_tree_iterator&	operator++()
 			{
