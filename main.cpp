@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 09:35:51 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 09:23:52 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,197 +38,141 @@ void	ft_print_vector(std::vector<T> & src)
 		std::cout << *it << std::endl;
 }
 
+template <typename _map>
+    void test_count(_map &X, _map &Y)
+    {
+        std::cout << "TEST : ";
+        std::cout << " - COUNT" << std::endl;
+        
+        _map Z(Y);
+
+        for (int i = 0; i < 1024; i++)
+        {
+            std::cout << i ;
+            if (Z.count(i) > 0)
+                std::cout << " is in map" << std::endl;
+            else
+                std::cout << std::endl;
+        }
+        (void)X;
+		std::cout << "double free" << std::endl;
+    }
+
+template <typename T>
+class _const_test {
+	public:
+		typedef T	value_type;
+
+		_const_test(void) : value() { };
+		_const_test(value_type src) : value(src) { };
+		_const_test(_const_test const &src) : value(src.value) { };
+		~_const_test(void) { };
+        
+		void print(std::ostream &o) { o << "_const_test::print called [" << this->value << "]"; }
+		void print(std::ostream &o) const { o << "_const_test::print const called [" << this->value << "]"; }
+		_const_test &operator=(value_type src) { this->value = src; return *this; };
+		_const_test &operator=(_const_test const &src) {
+			this->value = src.value;
+			return *this;
+		}
+		value_type	getValue(void) const { return this->value; }
+
+		operator value_type(void) const
+        {
+			return value_type(this->value);
+		}
+        
+	private:
+		value_type	value;
+};
+
+template <typename _Type>
+_Type rdm_val()
+{
+    return (_Type());
+}
+
+template <>
+std::string rdm_val<std::string>()
+{
+    std::string default_val[24] =
+    {
+        "Take me with you.",
+        "It's four in the morning. What are you doing?",
+        "Why are you being so stubborn?",
+        "I just wanted to do something good for once.",
+        "How many times have I told you? You can't visit me here.",
+        "I hope to repay your kindness someday.",
+        "How did you get this scar?",
+        "I thought you... I saw you get shot.",
+        "I bought two. Here.",
+        "I don't know. Shut up. I'm not blushing.",
+        "Anything to eat around here?",
+        "You want me? Here I am.",
+        "You know you aren't allowed in here, right?",
+        "Just let me do this for you.",
+        "This isn't just about you. It's about what's best for all of us.",
+        "Could you be happy here with me?",
+        "Life is about more than just surviving.",
+        "What was that for?",
+        "Is... that my shirt you're wearing?",
+        "Why can't you let me in? What are you so afraid of?",
+        "Give me one good reason why I should believe you.",
+        "I don't know how you do this every day...",
+        "Your plan's gonna get us all killed, and you know it.",
+        "I'm not even going to pretend to understand what you're talking about."
+    };
+    return (std::string(default_val[std::rand() % 18]));
+}
+
+template <>
+int rdm_val<int>()
+{
+    return (int(std::rand() % 1024));
+}
+
+template <>
+_const_test<int>	rdm_val<_const_test<int> >()
+{
+    return (_const_test<int>(rdm_val<int>()));
+}
 
 int	main()
 {
-	ft::map<int, std::string> m;
+    ft::pair<int, std::string> p1 = ft::make_pair<int, std::string>(23, "s");
+    ft::pair<int, std::string> p2 = ft::make_pair<int, std::string>(2, "s");
+    ft::pair<int, std::string> p3 = ft::make_pair<int, std::string>(3, "s");
+    ft::pair<int, std::string> p4 = ft::make_pair<int, std::string>(24, "s");
+    ft::pair<int, std::string> p5 = ft::make_pair<int, std::string>(29, "s");
+    ft::pair<int, std::string> p6 = ft::make_pair<int, std::string>(28, "l");
+	ft::map<int, std::string> Z;
+	Z.insert(p1);
+	Z.insert(p2);
+	Z.insert(p3);
+	Z.insert(p4);
+	Z.insert(p5);
+	Z.insert(p6);
+	ft::map<int, std::string> M;
+	Z.erase(3);
+	if (Z > M)
+		std::cout << "salut" << std::endl;
 
-    ft::pair<int, std::string> p1 = ft::make_pair<int, std::string>(12, "s");
-    ft::pair<int, std::string> p2 = ft::make_pair<int, std::string>(10, "s");
-    ft::pair<int, std::string> p3 = ft::make_pair<int, std::string>(11, "s");
-    ft::pair<int, std::string> p4 = ft::make_pair<int, std::string>(4, "s");
-    ft::pair<int, std::string> p5 = ft::make_pair<int, std::string>(-4, "s");
-    ft::pair<int, std::string> p6 = ft::make_pair<int, std::string>(6, "s");
-    ft::pair<int, std::string> p7 = ft::make_pair<int, std::string>(8, "s");
-    ft::pair<int, std::string> p8 = ft::make_pair<int, std::string>(11, "s");
-    ft::pair<int, std::string> p9 = ft::make_pair<int, std::string>(21, "s");
-    ft::pair<int, std::string> p10 = ft::make_pair<int, std::string>(13, "s");
-    ft::pair<int, std::string> p11 = ft::make_pair<int, std::string>(18, "s");
-    ft::pair<int, std::string> p12 = ft::make_pair<int, std::string>(22, "s");
-    ft::pair<int, std::string> p13 = ft::make_pair<int, std::string>(36, "s");
-    m.insert(p1);
-    m.insert(p2);
-    m.insert(p3);
-    m.insert(p4);
-    m.insert(p5);
-    m.insert(p6);
-    m.insert(p7);
-    m.insert(p8);
-    m.insert(p9);
-    m.insert(p10);
-    m.insert(p11);
-    m.insert(p12);
-    m.insert(p13);
-    for (ft::map<int, std::string>::iterator it = m.begin(); it != m.end(); it++)
-        std::cout << it->first << std::endl;
-
-		m.print();
-		return 0;
-	//std::vector<int> tes(8, 23);
-	//std::vector<int>::iterator l = tes.end();
-
-	//ft::vector<std::string> x(10, "Why are you being so stubborn?");
-	/*std::vector<std::string> y;
-	ft::map<int, std::string> test;
-	
-	ft::pair<int, std::string> p1 = ft::make_pair<int, std::string>(2, "salut");
-	ft::pair<int, std::string> p2 = ft::make_pair<int, std::string>(1, "ca");
-	ft::pair<int, std::string> p3 = ft::make_pair<int, std::string>(5, "marche");
-	ft::pair<int, std::string> p5 = ft::make_pair<int, std::string>(4, "?");
-	ft::pair<int, std::string> p6 = ft::make_pair<int, std::string>(0, "ceci");
-	ft::pair<int, std::string> p7 = ft::make_pair<int, std::string>(6, "la");
-	ft::pair<int, std::string> p8 = ft::make_pair<int, std::string>(9, "test");
-	ft::pair<int, std::string> p9 = ft::make_pair<int, std::string>(7, "chaine");
-	ft::pair<int, std::string> p10 = ft::make_pair<int, std::string>(12, "bounce");
-	ft::pair<int, std::string> p11 = ft::make_pair<int, std::string>(6, "player");
-	ft::pair<int, std::string> p12 = ft::make_pair<int, std::string>(8, "nouveau");
-
-	test.insert(p1);
-	test.insert(p2);
-	test.insert(p3);
-	test.insert(p5);
-	test.insert(p6);
-	test.insert(p7);
-	test.insert(p8);
-	test.insert(p9);
-	test.insert(p10);
-	test.insert(p11);
-	test.insert(p12);
-	
- 	test.print();*/
-	
-	//test.erase(2);
-	//std::cout << "val-> " << test[9] << std::endl;
-	/*ft::map<int, std::string>::iterator b = test.begin();
-	ft::map<int, std::string>::iterator e = test.end();
-	while (e != b)
-	{
-		std::cout << e->second << std::endl;
-		e--;
-	}*/
-	//ft::map<int, std::string> test1(b, e);
-	//std::cout << test1[3] << " | " << test1.size() << std::endl;
- 	//test1.print();
-	//test1.print();
-	//ft::vector<std::string> z;
-	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
-	
-    //y.assign(x.begin(), x.end() - (std::rand() % x.size()));
-	//std::cout << y.capacity() << std::endl;
-	//y.insert(y.begin(), 46, "salut");
-	//y = x;
-//	y.push_back("salut");/
-
-	/*std::vector<std::string> i(10, "Why are you being so stubborn?");
-	std::vector<std::string> j = std::vector<std::string>(i.begin(), i.end());
-	//x = ft::vector<std::string>(std::rand() % MAX_TEST_SIZE, "Why are you being so stubborn?");
-	int ft = 0;
-	j.push_back("salut");
-	for (ft::vector<std::string>::const_iterator it = y.begin(); it != y.end(); it++)
-	{
-		std::cout << "ft=" << *it << std::endl;
-		ft++;
-	}
-	std::cout << "reverse->" << std::endl;
-	for (ft::vector<std::string>::const_reverse_iterator it = y.rbegin(); it != y.rend(); it++)
-	{
-		std::cout << "r ft=" << *it << std::endl;
-		ft++;
-	}
-	int std = 0;
-	std::cout << "|||||||||||||||||||||||||||||||||||" << std::endl;
-	for (std::vector<std::string>::const_iterator it = j.begin(); it != j.end(); it++)
-	{
-		std::cout << "std=" << *it << std::endl;
-		std++;
-	}
-	std::cout << "reverse->" << std::endl;
-	for (std::vector<std::string>::const_reverse_iterator it = j.rbegin(); it != j.rend(); it++)
-	{
-		std::cout << "r std=" << *it << std::endl;
-		std++;
-	}
-	std::cout << "ft-> " << ft << " std-> " << std << std::endl;*/
- 	//ft::vector<int> test;
-	//ft::vector<int> tmp;
-	//test.push_back(2);
-	//test.push_back(5);
-	//test.push_back(4);
-	//test.push_back(6);
-	//test.push_back(7);
-	//test.push_back(1);
-	//test.push_back(3);
-	//ft::vector<int>::iterator b = test.begin();
-	//b += 4;
-	//ft::vector<int>::reverse_iterator it = test.rbegin();
-	//std::cout << "it->" << *it<< std::endl;
-	//it += 2;
-	//std::cout << "base-> " << *(it.base()) << std::endl;
-	//std::cout << "it->" << *it << std::endl;
-	//ft_print_vector(test);
-	//if (stmp >= stest)
-	//	std::cout << "real ouaaaaaaaaa" << std::endl;
-	//if (tmp >= test)
-	//	std::cout << "my ouaaaaaaaaa" << std::endl;
-	
-	//ft::swap(test, tmp);
-	//test.assign(b, l);
-	//test.assign(10, 42);
-	//ft::vector<int>::iterator p = test.begin();
-	//ft::vector<int>::iterator b = test.begin();
-	//std::vector<int>::iterator e = test.end();
-	//ft::vector<int> range(b, e);
-	//b -= 1;
-	//e--;
-	//e--;
-	//e--;
-	//p++;
-	//std::cout << *b << " | " << std::endl;
-	//test.erase(b);
-	//b = test.end();
-	//b--;
-	//b--;
-	//test.insert(b, 7, 32);
-	//ft_print_vector(test);
-	//std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
-	//ft::vector<int> cp(test);
-	
-	//ft_print_vector(cp);
-	//test.resize(8, 6);
-	//std::cout << "test-<" << test.back() << std::endl;
-	//test.reserve(25);
-	//test.resize(30, 54);
-	//test.reserve(45);
-	//v.resize(8, 6);
-	//ft_print_vector(v);
-	//test.clear();
-	//std::cout << *(test.begin()) << " | " << *(test.end()) << std::endl;
-	//test.push_back(58);
-	//std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
-	//ft_print_vector(test);
-
-	//test.pop_back();
-	//test.swap(tmp);
-	//std::cout << "size->" << test.size() << "| capacity->" << test.capacity() << std::endl;
-	//std::cout << "test-> " << std::endl;
-	//ft_print_vector(test);
-	//std::cout << "range-> " << std::endl;
-	//ft_print_vector(range);
-	/*std::vector<int>	test;
-	test = std::vector<int>(10, 2);
-	for (std::vector<int>::iterator it = test.begin(); it < test.end(); it++)
-		std::cout << *it << std::endl;
-	std::cout << test.size() << "|" << test.capacity() << "|" << test.max_size() << "|" << std::endl;*/
-	
-	//return 0;
+    std::pair<int, std::string> L1 = std::make_pair<int, std::string>(23, "s");
+    std::pair<int, std::string> L2 = std::make_pair<int, std::string>(2, "s");
+    std::pair<int, std::string> L3 = std::make_pair<int, std::string>(3, "s");
+    std::pair<int, std::string> L4 = std::make_pair<int, std::string>(24, "s");
+    std::pair<int, std::string> L5 = std::make_pair<int, std::string>(29, "s");
+    std::pair<int, std::string> L6 = std::make_pair<int, std::string>(28, "l");
+	std::map<int, std::string> X;
+	X.insert(L1);
+	X.insert(L2);
+	X.insert(L3);
+	X.insert(L4);
+	X.insert(L5);
+	X.insert(L6);
+	std::map<int, std::string> N;
+	X.erase(3);
+	if (X > N)
+		std::cout << "salut" << std::endl;
+	return 0;
 }

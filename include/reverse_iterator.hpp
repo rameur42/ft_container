@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:29:24 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/01 18:22:06 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 04:43:27 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,14 @@
 namespace ft {
 	
 	template <typename Iterator>
-	class reverse_iterator : public iterator<typename iterator_traits<Iterator>::value_type,
-											typename iterator_traits<Iterator>::difference_type,
-											typename iterator_traits<Iterator>::pointer,
-											typename iterator_traits<Iterator>::reference > {
+	class reverse_iterator {
 		public:
+			typedef	ft::iterator_traits<Iterator>								it_traits;
 			typedef Iterator												iterator_type;
-			//typedef	typename iterator_traits<Iterator>::iterator_category	iterator_category;
-			typedef typename iterator_traits<Iterator>::value_type			value_type;
-			typedef typename iterator_traits<Iterator>::difference_type		difference_type;
-			typedef typename iterator_traits<Iterator>::pointer				pointer;
-			typedef typename iterator_traits<Iterator>::reference			reference;
+			typedef typename it_traits::value_type			value_type;
+			typedef typename it_traits::difference_type		difference_type;
+			typedef typename it_traits::pointer				pointer;
+			typedef typename it_traits::reference			reference;
 			
 			reverse_iterator() : _revP() {};
 			explicit reverse_iterator(iterator_type it) : _revP(it) {};
@@ -53,7 +50,7 @@ namespace ft {
 			
 			iterator_type base() const { return this->_revP; }
 			
-			reference	operator*() const { return *(this->_revP - 1); }
+			reference	operator*() const;//{ return *(this->_revP - 1); }
 
 			reverse_iterator	operator+(difference_type n) const
 			{
@@ -117,6 +114,12 @@ namespace ft {
 			Iterator	_revP;
 	};
 
+	template <typename Iterator>
+	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator*() const
+	{
+		Iterator tmp = _revP;
+		return *--tmp;
+	}
 	template <typename Iterator>
 	bool operator==(const reverse_iterator<Iterator> & lhs,
 					const reverse_iterator<Iterator> & rhs)

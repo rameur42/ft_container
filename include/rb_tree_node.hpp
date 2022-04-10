@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 03:29:02 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 04:50:45 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 02:22:41 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ namespace ft {
 			data_pointer	_data;
 
 			node_pointer	_min;//??
-			node_pointer	_max;//??
+			node_pointer	_max;
 		
 			//default constructor
 			rb_tree_node() : _isRed(false), _nil_node(), _parent(), _left(), _right(), _data(), _min(), _max() {}

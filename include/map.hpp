@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:20:44 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 09:06:20 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 10:27:08 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 
 #include <functional>
 #include <memory>
+#include <algorithm>
 #include "pair.hpp"
 #include "rb_tree.hpp"
+#include "reverse_iterator.hpp"
+#include "equal.hpp"
+#include "lexicographical_compare.hpp"
 
 namespace ft
 {
@@ -25,7 +29,7 @@ namespace ft
 			public:
 				typedef	Key													key_type;
 				typedef T													mapped_type;
-				typedef typename ft::pair<key_type, mapped_type>			value_type;
+				typedef typename ft::pair<const key_type, mapped_type>		value_type;
 				typedef	Compare												key_compare;
 				typedef Alloc												allocator_type;
 
@@ -169,10 +173,86 @@ namespace ft
 				else
 					return 1;
 			}
+			iterator		lower_bound(const key_type & k)
+			{
+				value_type val = ft::make_pair(k, mapped_type());
+				return (iterator(_tree.get_lower_bound(val)));
+			}
+			const_iterator		lower_bound(const key_type & k) const
+			{
+				value_type val = ft::make_pair(k, mapped_type());
+				return (const_iterator(_tree.get_lower_bound(val)));
+			}
+			iterator		upper_bound(const key_type & k)
+			{
+				value_type val = ft::make_pair(k, mapped_type());
+				return (iterator(_tree.get_upper_bound(val)));
+			}
+			const_iterator		upper_bound(const key_type & k) const
+			{
+				value_type val = ft::make_pair(k, mapped_type());
+				return (const_iterator(_tree.get_upper_bound(val)));
+			}
+			pair_range			equal_range(const key_type & k)
+			{
+				value_type val = ft::make_pair(k, mapped_type());
+				return (_tree.get_equal_range(val));
+			}
+			const_pair_range			equal_range(const key_type & k) const
+			{
+				value_type val = ft::make_pair(k, mapped_type());
+				return (_tree.get_equal_range(val));
+			}
 			//Allocator
 			allocator_type	get_allocator() const { return _tree.get_data_allocator(); }
 			void			print() { _tree.print(); }
 		};
+
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			bool	operator==(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				if (lhs.size() != rhs.size())
+					return false;
+				return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
+			}
+
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			bool	operator!=(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				if (lhs == rhs)
+					return false;
+				return true;
+			}
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			bool	operator<(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
+			}
+		
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			bool	operator<=(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				if (lhs == rhs || lhs < rhs)
+					return true;
+				return false;
+			}
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			bool	operator>(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				return (rhs < lhs);
+			}
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			bool	operator>=(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				if (lhs == rhs || lhs > rhs)
+					return true;
+				return false;
+			}
+		template <typename Key, typename T, typename Compare, typename Alloc>
+			void	swap(map<Key, T, Compare, Alloc> const & lhs, map<Key, T, Compare, Alloc> const & rhs)
+			{
+				lhs.swap(rhs);
+			}
 }
 
 #endif

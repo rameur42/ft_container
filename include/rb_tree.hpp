@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 05:48:01 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/09 09:36:03 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 10:23:02 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,6 @@ namespace ft
 					}
 					_size = 0;
 				}
-				void	_clean()
-				{
-					_clean_tree(_root);
-					_root = _nil;
-					_root->_left = _nil;
-					_root->_right = _nil;
-				}
 				
 				node_pointer	_create_node(const value_type & val)
 				{
@@ -139,8 +132,8 @@ namespace ft
 				{
 					if (this->_root != _nil)
 						_clean();
-					_node_alloc.deallocate(_nil, 1);
 					_data_alloc.deallocate(_nil->_data, 1);
+					_node_alloc.deallocate(_nil, 1);
 				}
 				//assignement
 				rb_tree&	operator=(const rb_tree & src)
@@ -154,6 +147,14 @@ namespace ft
 					return *this;
 				}
 			
+				void	_clean()
+				{
+					_clean_tree(_root);
+					_root = _nil;
+					_root->_left = _nil;
+					_root->_right = _nil;
+				}
+				
 				node_pointer	search_node(const value_type & val) const
 				{
 					node_pointer res = _root;
@@ -171,6 +172,14 @@ namespace ft
 				{
 					node_pointer y = _nil;
 					node_pointer x;
+					if (_root == _nil)
+					{
+						_root = _create_node(val);
+						_nil->_min = _rb_tree_min_node(_root);
+						_nil->_max = _rb_tree_max_node(_root);
+						_size++;
+						return pair_type(iterator(_root), true);
+					}
 					if (start_pos != _nil)
 						x = start_pos;
 					else
@@ -205,7 +214,7 @@ namespace ft
 				{
 					return insert_node(val, _root);
 				}
-				iterator	insert_pose(const_iterator pos, value_type & val)
+				iterator	insert_pose(const_iterator pos, const value_type & val)
 				{
 					iterator res;
 					(void)pos;
@@ -214,28 +223,28 @@ namespace ft
 				}
 				void		delete_node(node_pointer node)
 				{
-					node_pointer x;
+					//node_pointer x;
 					node_pointer y;
 					y = node;
 					//bool node_isRed = node->_isRed;
 					if (node->_left == _nil)
 					{
-						x = node->_right;
+						//x = node->_right;
 						_rb_transplant(node, node->_right);
 					}
 					else if (node->_right == _nil)
 					{
-						x = node->_left;
+						//x = node->_left;
 						_rb_transplant(node, node->_left);
 					}
 					else
 					{
 						y = _rb_tree_min_node(node->_right);
 						//node_isRed = y->_isRed;
-						x = y->_right;
-						if (y->_parent == node)
-							x->_parent = y;
-						else
+						//x = y->_right;
+						//if (y->_parent == node)
+						//	x->_parent = y;
+						if (y->_parent != node)
 						{
 							_rb_transplant(y, y->_right);
 							y->_right = node->_right;
@@ -286,6 +295,64 @@ namespace ft
 					std::swap(_root, x._root);
 					std::swap(_nil, x._nil);
 					std::swap(_size, x._size);
+				}
+
+				//Operation
+				iterator		get_lower_bound(const value_type & val)
+				{
+					iterator it = rb_begin();
+					while (it != rb_end())
+					{
+						if (!_key_compare(*it , val))
+							return it;
+						it++;
+					}
+					return it;
+				}
+				const_iterator	get_lower_bound(const value_type & val) const
+				{
+					const_iterator it = rb_begin();
+					while (it != rb_end())
+					{
+						if (!_key_compare(*it , val))
+							return it;
+						it++;
+					}
+					return it;
+				}
+				iterator		get_upper_bound(const value_type & val)
+				{
+					iterator it = rb_begin();
+					while (it != rb_end())
+					{
+						if (_key_compare(val , *it))
+							return it;
+						it++;
+					}
+					return it;
+				}
+				const_iterator	get_upper_bound(const value_type & val) const
+				{
+					const_iterator it = rb_begin();
+					while (it != rb_end())
+					{
+						if (_key_compare(val , *it))
+							return it;
+						it++;
+					}
+					return it;
+				}
+				pair_range		get_equal_range(const value_type & val)
+				{
+					iterator b = get_lower_bound(val);
+					iterator e = get_upper_bound(val);
+					return pair_range(b, e);  
+				}
+				const_pair_range		get_equal_range(const value_type & val) const
+				{
+					iterator b = get_lower_bound(val);
+					iterator e = get_upper_bound(val);
+					return const_pair_range(b, e);  
 				}
 				data_allocator	get_data_allocator() const { return _data_alloc; }
 				Comp			get_key_compare() const { return _key_compare; }

@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:30:55 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/08 01:55:48 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 03:09:29 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,32 +20,20 @@ namespace ft {
 			typedef T2		second_type;
 	
 			//default constructor
-			pair()
-			{
-				first = NULL;
-				second = NULL;
-			}
+			pair() : first(), second() {}
 			//copy constructor
 			template <class U, class V>
-			pair(const pair<U, V>& pr)
-			{
-				this->first = pr.first;
-				this->second = pr.second;
-			}
+			pair(const pair<U, V>& pr) : first(pr.first), second(pr.second) {}
 			//initialisation
-			pair(const first_type& a, const second_type & b)
-			{
-				first = a;
-				second = b;
-			}
+			pair(const first_type& a, const second_type & b) : first(a), second(b) {}
 			
 			pair&	operator=(const pair& pr)
 			{
-				if (this != &pr)
-				{
+				//if (this != &pr)
+				//{
 					this->first = pr.first;
 					this->second = pr.second;
-				}
+				//}
 				return *this;
 			}
 			

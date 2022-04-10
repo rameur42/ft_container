@@ -6,14 +6,14 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/08 04:52:34 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 04:37:06 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "iterator.hpp"
+#include "reverse_iterator.hpp"
 #include "enable_if.hpp"
 #include "is_integral.hpp"
 #include "equal.hpp"
@@ -47,118 +47,6 @@ namespace ft {
 			typedef	typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 			//constructor/copy/destructor-------------------------------------------------------------------------------------
-			/*explicit vector(const allocator_type& alloc = allocator_type())
-			{
-				this->_alloc = alloc;
-				this->_n = 0;
-				this->_capacity = 0;
-				this->_begin = NULL;
-				this->_end = NULL;
-			}
-
-			//fill constructor
-			explicit vector(size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type())
-			{
-				this->_alloc = alloc;
-				this->_n = n;
-				this->_begin = NULL;
-				this->_end = NULL;
-				if (n > _alloc.max_size())
-					throw std::out_of_range("error");
-				if (n)
-				{
-					this->_capacity = n;
-					this->_begin = this->_alloc.allocate(n);
-				}
-				else
-					_capacity = 0;
-				this->_end = this->_begin;
-				for (size_type i = 0; i < n; i++)
-				{
-					this->_alloc.construct(this->_end, val);
-					this->_end++;
-				}
-			}
-
-			//range constructor
-			template <class InputIterator>
-				vector (InputIterator first, InputIterator last,
-					const allocator_type& alloc = allocator_type(),
-					typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type* = NULL)
-			{
-				this->_alloc = alloc;
-				difference_type d = std::distance(first, last);
-				this->_n = d;
-				this->_capacity = this->_n;
-				//if (d)
-				//{
-					if (this->_capacity > _alloc.max_size())
-						throw std::out_of_range("error");
-					this->_begin = this->_alloc.allocate(this->_capacity);
-					while (first != last)
-					{
-						this->_alloc.construct(this->_end, *first);
-						this->_end++;
-						first++;
-					}
-					_end = _begin + _n;
-				//}
-			}
-			
-			//copy constructor
-			vector(const vector & x)
-			{
-				pointer tmp;
-				
-				this->_begin = NULL;
-				this->_n = x._n;
-				this->_capacity = this->_n;
-				if (x._capacity)
-					this->_begin = this->_alloc.allocate(x._capacity);
-				this->_end = this->_begin;
-				tmp = x._begin;
-				for (unsigned int i = 0; i < x._n; i++)
-				{
-					this->_alloc.construct(this->_end, *tmp);
-					tmp++;
-					this->_end++;
-				}
-			}
-			
-			
-			~vector()
-			{ 
-				this->clear();
-				if (this->_capacity != 0)
-					this->_alloc.deallocate(this->_begin, this->_capacity);
-			}
-			
-			vector&	operator=(const vector& rhs)
-			{
-				pointer tmp;
-				
-				if (this != &rhs)
-				{
-					this->_dealloc();
-					if (rhs.empty())
-						return (*this);
-					this->_n = rhs._n;
-					this->_capacity = rhs._capacity;
-					if (this->capacity() > _alloc.max_size())
-						throw std::out_of_range("error");
-					this->_begin = this->_alloc.allocate(rhs._capacity);
-					this->_end = this->_begin;
-					tmp = rhs._begin;
-					for (unsigned int i = 0; i < rhs._n; i++)
-					{
-						this->_alloc.construct(this->_end, *tmp);
-						tmp++;
-						this->_end++;
-					}
-				}
-				return (*this);
-			}*/
-
 			explicit vector(const allocator_type& alloc = allocator_type()) {
 				
 				this->_alloc = alloc;

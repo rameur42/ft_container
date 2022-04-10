@@ -6,14 +6,14 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/29 19:34:46 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/01 18:11:38 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/10 09:11:14 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_TRAIT_HPP
 #define ITERATOR_TRAIT_HPP
 
-#include "iterator.hpp"
+#include <cstddef>
 
 namespace ft{
 	
@@ -34,18 +34,18 @@ namespace ft{
 	};
 	
 	template <typename Iterator>
-		class iterator_traits {
-			public: 
-				typedef typename Iterator::difference_type		difference_type;
-				typedef typename Iterator::value_type			value_type;
-				typedef typename Iterator::pointer				pointer;
-				typedef typename Iterator::reference			reference;
-				//typedef typename Iterator::iterator_category	iterator_category;
-		};
+	struct iterator_traits
+	{
+			typedef typename Iterator::difference_type		difference_type;
+			typedef typename Iterator::value_type			value_type;
+			typedef typename Iterator::pointer				pointer;
+			typedef typename Iterator::reference			reference;
+			//typedef typename Iterator::iterator_category	iterator_category;
+	};
 
 	template <typename T>
-	class iterator_traits<T*> {
-		public: 
+	struct iterator_traits<T*>
+	{
 			typedef random_access_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t				difference_type;
 			typedef T							value_type;
@@ -54,8 +54,8 @@ namespace ft{
 	};
 
 	template <typename T>
-	struct iterator_traits<const T*> {
-		public:
+	struct iterator_traits<const T*>
+	{
 			typedef random_access_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t				difference_type;
 			typedef T							value_type;
