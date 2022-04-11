@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:42 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/10 04:37:06 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/11 02:29:19 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ namespace ft {
 		
 			typedef T														value_type;
 			typedef Alloc													allocator_type;
-			typedef unsigned int											size_type;
+			typedef size_t													size_type;
 			typedef typename allocator_type::reference						reference;
 			typedef typename allocator_type::const_reference				const_reference;
 			typedef typename allocator_type::pointer						pointer;
@@ -194,33 +194,6 @@ namespace ft {
 
 			size_type	max_size() const { return this->_alloc.max_size(); }
 
-			/*void		resize(size_type n, value_type val = value_type()) {
-				if (n == 0)
-					return (clear());
-				if (n < this->_n)
-				{
-					while (this->_n > n)
-					{
-						this->_alloc.destroy(this->_end - 1);
-						this->_end--;
-						this->_n--;
-					}
-				}
-				else if (n > this->_n)
-				{
-					std::cout << "this->_n" << this->_n << " | " << n << " | " << this->_capacity << std::endl;
-					if (n > this->_capacity)
-						this->reserve(n);
-					//std::uninitialized_copy(this->_begin)
-					while (this->_n < n)
-					{
-						this->_alloc.construct(this->_begin + this->_n, val);
-						this->_n++;
-					}
-					this->_end = this->_begin + this->_n;
-				}
-			}*/
-
 			void _dealloc()
 			{
 				if (_capacity)
@@ -279,30 +252,6 @@ namespace ft {
 					return true;
 				return false;
 			}
-			
-			/*void	reserve(size_type n) {
-				if (n > this->_capacity)
-				{
-					if (n > this->max_size())
-						throw std::length_error("Error: reserve can't alloc more than max_size");
-					vector res;
-					iterator tmp = this->begin();
-					res._begin = res._alloc.allocate(n);
-					res._end = res._begin;
-					for (size_type i = 0; tmp != this->end(); ++tmp)
-					{
-						res._alloc.construct(res._begin + i, *tmp);
-						i++;
-						res._end++;
-					}
-					this->_alloc.deallocate(this->_begin, this->_capacity);
-					this->_alloc = res._alloc;
-					this->_capacity = n;
-					this->_begin = res._begin;
-					this->_end = res._end;
-					res._begin = NULL;
-				}
-			}*/
 
 			void	reserve(size_type n) {
 				

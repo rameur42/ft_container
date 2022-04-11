@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/17 21:33:32 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/10 09:23:52 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/11 05:06:53 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,10 +152,8 @@ int	main()
 	Z.insert(p4);
 	Z.insert(p5);
 	Z.insert(p6);
-	ft::map<int, std::string> M;
+	ft::map<int, int> M;
 	Z.erase(3);
-	if (Z > M)
-		std::cout << "salut" << std::endl;
 
     std::pair<int, std::string> L1 = std::make_pair<int, std::string>(23, "s");
     std::pair<int, std::string> L2 = std::make_pair<int, std::string>(2, "s");
@@ -170,9 +168,10 @@ int	main()
 	X.insert(L4);
 	X.insert(L5);
 	X.insert(L6);
-	std::map<int, std::string> N;
+	std::map<int, int> N;
 	X.erase(3);
-	if (X > N)
-		std::cout << "salut" << std::endl;
+	std::cout << "ft->  " << M.max_size() << std::endl;
+	std::cout << "std-> " << X.max_size() << std::endl;
+	std::cout << "std-> " << N.max_size() << std::endl;
 	return 0;
 }

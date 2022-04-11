@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 05:48:01 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/10 10:23:02 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/11 05:08:16 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@ namespace ft
 	template < typename T, typename Comp, typename Alloc>
 		class rb_tree {
 			private:
-				typedef rb_tree<T, Comp, Alloc>													self;//??
+				//typedef rb_tree<T, Comp, Alloc>													self;//??
 				typedef	size_t																	size_type;
 				typedef ptrdiff_t																difference_type;
 				typedef T																		value_type;
 				typedef ft::rb_tree_node<T>														node_type;
 				typedef ft::rb_tree_node<T>*													node_pointer;
 				typedef typename Alloc::template rebind<value_type>::other						data_allocator;
-				typedef typename Alloc::template rebind<ft::rb_tree_node<value_type> >::other	node_allocator;
+				typedef typename Alloc::template rebind<node_type>::other						node_allocator;
 
 				//Allocators
 				data_allocator	_data_alloc;
@@ -288,15 +288,13 @@ namespace ft
 					return false;
 				}
 				size_type	get_size() const { return _size; }
-				size_type	get_max_size() const { return (_node_alloc.max_size() / sizeof(value_type)); }
-				
+				size_type	get_max_size() const { return _node_alloc.max_size() ; }
 				void		rb_swap(rb_tree & x)
 				{
 					std::swap(_root, x._root);
 					std::swap(_nil, x._nil);
 					std::swap(_size, x._size);
 				}
-
 				//Operation
 				iterator		get_lower_bound(const value_type & val)
 				{
@@ -350,8 +348,8 @@ namespace ft
 				}
 				const_pair_range		get_equal_range(const value_type & val) const
 				{
-					iterator b = get_lower_bound(val);
-					iterator e = get_upper_bound(val);
+					const_iterator b = get_lower_bound(val);
+					const_iterator e = get_upper_bound(val);
 					return const_pair_range(b, e);  
 				}
 				data_allocator	get_data_allocator() const { return _data_alloc; }

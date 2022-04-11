@@ -6,7 +6,7 @@
 /*   By: rameur <rameur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/08 01:20:44 by rameur            #+#    #+#             */
-/*   Updated: 2022/04/10 10:27:08 by rameur           ###   ########.fr       */
+/*   Updated: 2022/04/11 05:09:59 by rameur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,11 @@ namespace ft
 			//Capacity
 			bool					empty() const { return _tree.empty(); }
 			size_type				size() const { return _tree.get_size(); }
-			size_type				max_size() const { return _tree.get_max_size(); }
+			size_type				max_size() const { 
+				//return _tree.get_max_size(); 
+				Alloc tmp;
+				return tmp.max_size();
+				}
 			//Element access
 			mapped_type&			operator[](const key_type& k)
 			{
